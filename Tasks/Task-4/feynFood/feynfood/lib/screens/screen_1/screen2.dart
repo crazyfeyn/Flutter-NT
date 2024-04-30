@@ -43,7 +43,9 @@ class ScreenSecond extends StatelessWidget {
                         color: Color(0xFF29ca7d),
                         borderRadius: BorderRadius.all(Radius.circular(17))),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/thirdpage");
+                      },
                       child: const Text(
                         "Next",
                         style: TextStyle(color: Colors.white, fontSize: 18),
