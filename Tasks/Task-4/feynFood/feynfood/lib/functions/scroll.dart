@@ -1,5 +1,5 @@
 import 'package:feynfood/screens/screen_1/screen_last_2.dart';
-import 'package:feynfood/screens/screen_last_4.dart';
+import 'package:feynfood/screens/screen_1/screen_last_4.dart';
 import 'package:flutter/material.dart';
 
 class Scroll extends StatelessWidget {

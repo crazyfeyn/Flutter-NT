@@ -156,7 +156,7 @@ class Screen3 extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(17))),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, "/last1");
+                        Navigator.pushNamed(context, "/fourthpage");
                       },
                       child: const Text(
                         "Login",
