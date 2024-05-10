@@ -22,6 +22,7 @@ class _MyApp extends State<Vazifa1> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: color,
         body: Center(
