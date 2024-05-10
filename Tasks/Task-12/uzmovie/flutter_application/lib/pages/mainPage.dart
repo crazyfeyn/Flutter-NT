@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application/utils/extensions.dart';
-import 'package:flutter_application/utils/tools.dart';
 import 'package:flutter_application/utils/widgets.dart';
 
 List<String> recentTextLst = [
