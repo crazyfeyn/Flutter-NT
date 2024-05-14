@@ -1,5 +1,5 @@
-import 'dart:ffi';
-import 'dart:math';
+import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application/widgets/widgets_all.dart';
@@ -13,6 +13,7 @@ class ScreenMain extends StatefulWidget {
 
 class _ScreenMain extends State<ScreenMain> {
   int tries = 1;
+  bool isDraw = false;
   bool flag = true;
   int playerX = 0;
   int playerO = 0;
@@ -22,8 +23,20 @@ class _ScreenMain extends State<ScreenMain> {
   bool turnMe = false;
   String currentPlayer = '';
   String botPlayer = '';
-  List board = List.generate(3, (_) => List.generate(3, (_) => ""));
+  int index = 0;
+  bool winnerHave = false;
+  List board = List.generate(9, (index) => "");
   List randomChoice = List.generate(3, (i) => List.generate(3, (j) => [i, j]));
+  List<List<int>> winningConditions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,60 +49,29 @@ class _ScreenMain extends State<ScreenMain> {
               const SizedBox(
                 height: 60,
               ),
-              
               if (flag) choice(),
-              
               const SizedBox(height: 20),
               line(),
               const SizedBox(height: 20),
               score(playerX, playerO),
+              const SizedBox(height: 50),
+
+//----------------------//----------------------//----------------------//-------------------------
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  3,
-                  (i) => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      3,
-                      (j) => InkWell(
-                        onTap: () {
-                          setState(() {
-                            if (board[i][j] == "") {
-                              tries++;
-                              board[i][j] = currentPlayer;
-                              botMove();
-                              var x = checkWin(currentPlayer);
-                            
-                            }
-                          });
-                        },
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              right: BorderSide(
-                                  color: Colors.white, width: j < 2 ? 5 : 0),
-                              bottom: BorderSide(
-                                  color: Colors.white, width: i < 2 ? 5 : 0),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "${board[i][j]}",
-                              style: const TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 37),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                children: [
+                  Column(
+                    children: [
+                      rowOne(0, 1, 2),
+                      bottomLine(),
+                      rowOne(3, 4, 5),
+                      bottomLine(),
+                      rowOne(6, 7, 8)
+                    ],
                   ),
-                ),
+                ],
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -97,19 +79,28 @@ class _ScreenMain extends State<ScreenMain> {
                     children: [
                       Text(
                         "X - $scoreX",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 30,
                             color: Colors.white),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         "O - $scoreO",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.w800,
                             fontSize: 30,
                             color: Colors.white),
                       ),
+                      const SizedBox(height: 10),
+                      if (isDraw)
+                        Text(
+                          "Draw",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 30,
+                              color: Colors.red),
+                        ),
                     ],
                   )
                 ],
@@ -138,7 +129,6 @@ class _ScreenMain extends State<ScreenMain> {
               setState(() {
                 currentPlayer = 'X';
                 botPlayer = 'O';
-                turnMe = true;
                 flag = !flag;
               });
             },
@@ -170,7 +160,6 @@ class _ScreenMain extends State<ScreenMain> {
                 currentPlayer = 'O';
                 botPlayer = 'X';
                 turnBot = true;
-                botMove();
                 flag = !flag;
               });
             },
@@ -188,28 +177,99 @@ class _ScreenMain extends State<ScreenMain> {
     );
   }
 
-  void botMove() {
-    while (true) {
-      int randomO = Random().nextInt(3);
-      int randomX = Random().nextInt(3);
+  Widget borderOne(int index) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          if (board[index] == "") {
+            if (isDraw) {
+              checkDraw();
+              isDraw = false;
+            }
+            tries++;
+            board[index] = currentPlayer;
+            switchPlayer();
+            checkWinning();
+          }
+        });
+      },
+      child: Container(
+        width: 60,
+        height: 60,
+        child: Text(
+          textAlign: TextAlign.center,
+          "${board[index]}",
+          style: const TextStyle(
+              fontSize: 25, fontWeight: FontWeight.w700, color: Colors.red),
+        ),
+      ),
+    );
+  }
 
-      if (board[randomX][randomO] == "") {
-        board[randomX][randomO] = botPlayer;
-        break;
-      }
+  Widget rowOne(int first, int second, int third) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        borderOne(first),
+        topLine(),
+        borderOne(second),
+        topLine(),
+        borderOne(third),
+      ],
+    );
+  }
+
+  void switchPlayer() {
+    setState(() {
+      currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
+    });
+  }
+
+  void resetBoard() {
+    setState(() {
+      board = List.generate(9, (index) => "");
+      tries = 0;
+    });
+  }
+
+  void resetScore() {
+    setState(() {
+      scoreX = 0;
+      scoreO = 0;
+    });
+  }
+
+  void checkDraw() {
+    if (tries >= 9 && !winnerHave) {
+      setState(() {
+        isDraw = true;
+        resetBoard();
+      });
     }
   }
 
-  checkWin(String player) {
-    for (int i = 0; i < 3; i++) {
-      if ((board[i][0] == board[i][1] && board[i][1] == board[i][2]) ||
-          (board[0][i] == board[1][i] && board[1][i] == board[2][i]) ||
-          (board[0][0] == board[1][1] && board[1][1] == board[2][2]) ||
-          (board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
-        return true;
+  void checkWinning() {
+    for (var i in winningConditions) {
+      String first = board[i[0]];
+      String second = board[i[1]];
+      String third = board[i[2]];
+
+      if (first == second && second == third && first != "") {
+        if (first == 'X') {
+          setState(() {
+            scoreX++;
+          });
+        } else {
+          setState(() {
+            scoreO++;
+          });
+        }
+        resetBoard();
+        setState(() {
+          winnerHave = true;
+        });
+        break;
       }
     }
-
-    return false;
   }
 }
