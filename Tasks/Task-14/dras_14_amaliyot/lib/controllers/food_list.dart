@@ -6,19 +6,19 @@ List<Map<String, String>> foods = [
     "price": "\$30"
   },
   {
-    "image": "assets/images/food1.jpeg",
+    "image": "assets/images/food.png",
     "text1": "Margherita Pizza",
     "text2": "Classic Italian pizza",
     "price": "\$15"
   },
   {
-    "image": "assets/images/food2.jpg",
+    "image": "assets/images/food.png",
     "text1": "Pad Thai",
     "text2": "Thai stir-fried noodles",
     "price": "\$12"
   },
   {
-    "image": "assets/images/food3.jpg",
+    "image": "assets/images/food.png",
     "text1": "Grilled Salmon",
     "text2": "Fresh salmon fillet",
     "price": "\$22"

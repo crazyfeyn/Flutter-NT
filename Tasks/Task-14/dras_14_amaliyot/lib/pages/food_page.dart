@@ -1,13 +1,25 @@
 import 'dart:ui';
 
 import 'package:dras_14_amaliyot/controllers/food_list.dart';
+import 'package:dras_14_amaliyot/widgets/general.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
-class FoodPage extends StatelessWidget {
+class FoodPage extends StatefulWidget {
   int index = 0;
   FoodPage({required this.index});
 
+  @override
+  State<StatefulWidget> createState() {
+    return _FoodPage(index: index);
+  }
+}
+
+class _FoodPage extends State<FoodPage> {
+  int index = 0;
+  int plusOrMin = 0;
+  _FoodPage({required this.index});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +34,7 @@ class FoodPage extends StatelessWidget {
             icon: const Icon(
               CupertinoIcons.back,
               color: Colors.black,
+              size: 30,
             ),
           ),
         ),
@@ -34,6 +47,7 @@ class FoodPage extends StatelessWidget {
               icon: const Icon(
                 CupertinoIcons.heart_fill,
                 color: Colors.black,
+                size: 30,
               ),
             ),
           ),
@@ -56,29 +70,99 @@ class FoodPage extends StatelessWidget {
               ),
             ),
             Container(
-              height: 150,
-              width: 150,
+              height: 250,
+              width: 350,
               decoration: const BoxDecoration(shape: BoxShape.circle),
               child: Image.asset(
                 foods[index]["image"]!,
                 fit: BoxFit.cover,
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Column(
               children: [
-                Text(
-                  foods[index]["text1"]!,
-                  style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                starSection(index),
+                SizedBox(
+                  height: 20,
                 ),
-                const Row(),
+                fireSection()
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget fireSection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          width: 210,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Image.asset(
+                "assets/images/fire.png",
+                width: 30,
+              ),
+              Text(
+                "5 categories",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12),
+              ),
+              Icon(
+                Icons.delivery_dining,
+                color: Colors.red,
+                size: 30,
+              ),
+              Text(
+                "20:25",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+              )
+            ],
+          ),
+        ),
+
+        //?click
+        Container(
+          decoration: BoxDecoration(
+              color: Colors.yellow, borderRadius: BorderRadius.circular(50)),
+          child: Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      if (plusOrMin > 0) plusOrMin--;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.remove,
+                  )),
+              Text(
+                "$plusOrMin",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 23),
+              ),
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      plusOrMin++;
+                    });
+                  },
+                  icon: Icon(Icons.add)),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

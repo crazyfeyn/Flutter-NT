@@ -84,9 +84,15 @@ class FirstPage extends StatelessWidget {
                     children: [
                       Text(
                         "Recommended",
-                        style: TextStyle(color: Colors.white, fontSize: 24),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500),
                       ),
                     ],
+                  ),
+                  SizedBox(
+                    height: 60,
                   ),
                   Container(
                     height: 700,
@@ -96,7 +102,7 @@ class FirstPage extends StatelessWidget {
                         children: [
                           Wrap(
                             spacing: 15,
-                            runSpacing: 15,
+                            runSpacing: 80,
                             children: [
                               for (int i = 0; i < 4; i++) func(i, context),
                             ],
