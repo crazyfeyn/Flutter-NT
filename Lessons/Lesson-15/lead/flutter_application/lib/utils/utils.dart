@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 
 List<Map<String, dynamic>> dataQolip = [
   {
-    "dataTime": DateTime.parse("2024-01-12"),
+    "dataTime": DateTime.parse("2024-02-12"),
     "sped_money": 120,
-    "monthly_budget": 100000000,
     "product": <Map<String, dynamic>>[
       {
         "icon": Icon(Icons.alarm),
@@ -17,9 +16,8 @@ List<Map<String, dynamic>> dataQolip = [
     ]
   },
   {
-    "dataTime": DateTime.parse("2024-02-12"),
+    "dataTime": DateTime.parse("2024-01-12"),
     "sped_money": 80,
-    "monthly_budget": 150000000,
     "product": <Map<String, dynamic>>[
       {
         "icon": Icon(Icons.shopping_cart),
@@ -32,7 +30,6 @@ List<Map<String, dynamic>> dataQolip = [
   {
     "dataTime": DateTime.parse("2024-03-12"),
     "sped_money": 200,
-    "monthly_budget": 80000000,
     "product": <Map<String, dynamic>>[
       {
         "icon": Icon(Icons.restaurant_menu),
@@ -42,33 +39,12 @@ List<Map<String, dynamic>> dataQolip = [
       }
     ]
   },
-  {
-    "dataTime": DateTime.parse("2024-04-12"),
-    "sped_money": 150,
-    "monthly_budget": 120000000,
-    "product": <Map<String, dynamic>>[
-      {
-        "icon": Icon(Icons.train),
-        "title": "Train Ticket",
-        "date": DateTime.now(),
-        "price": 30000.0,
-      }
-    ]
-  },
-  {
-    "dataTime": DateTime.parse("2024-05-12"),
-    "sped_money": 100,
-    "monthly_budget": 200000000,
-    "product": <Map<String, dynamic>>[
-      {
-        "icon": Icon(Icons.mobile_screen_share),
-        "title": "Phone Charger",
-        "date": DateTime.now(),
-        "price": 15000.0,
-      }
-    ]
-  },
 ];
+
+sortedFunc() {
+  dataQolip.sort((a, b) => a["dataTime"].month.compareTo(b["dataTime"].month));
+  return dataQolip;
+}
 
 monthByNumber(monthNumber) {
   switch (monthNumber) {

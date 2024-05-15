@@ -12,7 +12,7 @@ class ScreenMain extends StatefulWidget {
 }
 
 class _ScreenMain extends State<ScreenMain> {
-  int tries = 1;
+  int tries = -1;
   bool isDraw = false;
   bool flag = true;
   int playerX = 0;
@@ -26,7 +26,6 @@ class _ScreenMain extends State<ScreenMain> {
   int index = 0;
   bool winnerHave = false;
   List board = List.generate(9, (index) => "");
-  List randomChoice = List.generate(3, (i) => List.generate(3, (j) => [i, j]));
   List<List<int>> winningConditions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -52,8 +51,6 @@ class _ScreenMain extends State<ScreenMain> {
               if (flag) choice(),
               const SizedBox(height: 20),
               line(),
-              const SizedBox(height: 20),
-              score(playerX, playerO),
               const SizedBox(height: 50),
 
 //----------------------//----------------------//----------------------//-------------------------
@@ -66,7 +63,8 @@ class _ScreenMain extends State<ScreenMain> {
                       bottomLine(),
                       rowOne(3, 4, 5),
                       bottomLine(),
-                      rowOne(6, 7, 8)
+                      rowOne(6, 7, 8),
+                      if (tries >= 9) drawFunc(),
                     ],
                   ),
                 ],
@@ -93,14 +91,6 @@ class _ScreenMain extends State<ScreenMain> {
                             color: Colors.white),
                       ),
                       const SizedBox(height: 10),
-                      if (isDraw)
-                        Text(
-                          "Draw",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 30,
-                              color: Colors.red),
-                        ),
                     ],
                   )
                 ],
@@ -182,10 +172,6 @@ class _ScreenMain extends State<ScreenMain> {
       onTap: () {
         setState(() {
           if (board[index] == "") {
-            if (isDraw) {
-              checkDraw();
-              isDraw = false;
-            }
             tries++;
             board[index] = currentPlayer;
             switchPlayer();
@@ -240,12 +226,37 @@ class _ScreenMain extends State<ScreenMain> {
   }
 
   void checkDraw() {
-    if (tries >= 9 && !winnerHave) {
-      setState(() {
-        isDraw = true;
-        resetBoard();
-      });
-    }
+    setState(() {
+      resetBoard();
+    });
+  }
+
+  drawFunc() {
+    return Column(
+      children: [
+        Text(
+          "Draw",
+          style: TextStyle(
+              color: Colors.red, fontWeight: FontWeight.w700, fontSize: 30),
+        ),
+        TextButton(
+            onPressed: () {
+              setState(() {
+                resetBoard();
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                "reset",
+                style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 30),
+              ),
+            ))
+      ],
+    );
   }
 
   void checkWinning() {

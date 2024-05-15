@@ -9,18 +9,7 @@ Widget line() {
   );
 }
 
-Widget score(int playerX, int playerO) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Text(
-        "$playerX : $playerO",
-        style: const TextStyle(
-            fontSize: 50, fontWeight: FontWeight.w700, color: Colors.white),
-      ),
-    ],
-  );
-}
+
 
 Widget bottomLine() {
   return const SizedBox(
