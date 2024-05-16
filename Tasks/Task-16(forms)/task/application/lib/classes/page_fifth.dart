@@ -18,6 +18,7 @@ class _Page_fifth extends State<Page_fifth> {
   final _passwordController = TextEditingController();
   bool _obscureText1 = true;
   bool _obscureText2 = true;
+  final PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     return Padding(

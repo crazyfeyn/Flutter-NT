@@ -13,6 +13,8 @@ class Page_second extends StatefulWidget {
 class _Page_second extends State<Page_second> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final PageController _pageController = PageController();
+
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class _Page_second extends State<Page_second> {
           ),
           Column(
             children: [
-              buttonBig("Log in"),
+              buttonBig("Log in", context, _pageController),
               20.height(),
               faangLogin(),
               20.height(),

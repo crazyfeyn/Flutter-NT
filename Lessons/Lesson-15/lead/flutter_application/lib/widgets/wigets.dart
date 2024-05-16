@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/utils/utils.dart';
 
 class TopLogic extends StatefulWidget {
+  final Function(int) updateIndex;
+  final int currentIndex;
+  final Function(String) updateSana;
+
+  const TopLogic(
+      {required this.updateIndex,
+      required this.currentIndex,
+      required this.updateSana});
+
   @override
   State<StatefulWidget> createState() => _TopLogicState();
 }
 
 class _TopLogicState extends State<TopLogic> {
-  int index = 0;
   late DateTime showDate;
   late String sana;
 
@@ -35,43 +43,42 @@ class _TopLogicState extends State<TopLogic> {
               setState(() {
                 showDate = pickedDate;
                 sana = "${showDate.month}.${showDate.year}";
+                widget.updateSana(sana);
               });
             }
           },
           child: Text(
-            "${monthByNumber(sortedFunc()[index]['dataTime'].month)}, ${sortedFunc()[index]['dataTime'].year}",
+            "${monthByNumber(sortedFunc()[widget.currentIndex]['dataTime'].month)}, ${sortedFunc()[widget.currentIndex]['dataTime'].year}",
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
         ),
-        const SizedBox(
-          height: 50,
-        ),
+        const SizedBox(height: 50),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-                onPressed: () {
-                  setState(() {
-                    if (index > 0) {
-                      index--;
-                    }
-                  });
-                },
-                icon: const Icon(CupertinoIcons.back)),
+              onPressed: () {
+                if (widget.currentIndex > 0) {
+                  widget.updateIndex(widget.currentIndex - 1);
+                }
+              },
+              icon: const Icon(CupertinoIcons.back),
+            ),
             Text(
-              "${dataQolip[index]["sped_money"]}",
+              "${dataQolip[widget.currentIndex]["sped_money"]}",
               style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
                   fontSize: 30),
             ),
             IconButton(
-                onPressed: () {
-                  setState(() {
-                    if (index < dataQolip.length - 1) index++;
-                  });
-                },
-                icon: Icon(CupertinoIcons.forward)),
+              onPressed: () {
+                if (widget.currentIndex < dataQolip.length - 1) {
+                  widget.updateIndex(widget.currentIndex + 1);
+                }
+              },
+              icon: const Icon(CupertinoIcons.forward),
+            ),
           ],
         )
       ],

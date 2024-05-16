@@ -2,40 +2,35 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+int index = 0;
 List<Map<String, dynamic>> dataQolip = [
   {
-    "dataTime": DateTime.parse("2024-02-12"),
-    "sped_money": 120,
+    "dataTime": DateTime.parse("2024-02-01"),
+    "sped_money": 12000000,
     "product": <Map<String, dynamic>>[
       {
-        "icon": Icon(Icons.alarm),
-        "title": "Qovun",
-        "date": DateTime.now(),
+        "title": ["Qovun", "tarvuz", "Nok", "Suv", "Ice tea"],
         "price": 20000.0,
       }
     ]
   },
   {
-    "dataTime": DateTime.parse("2024-01-12"),
-    "sped_money": 80,
+    "dataTime": DateTime.parse("2024-01-01"),
+    "sped_money": 5000000,
     "product": <Map<String, dynamic>>[
       {
-        "icon": Icon(Icons.shopping_cart),
-        "title": "Milk",
-        "date": DateTime.now(),
-        "price": 5000.0,
+        "title": ["Milk", "water", "oil"],
+        // "price": 5000.0,
       }
     ]
   },
   {
-    "dataTime": DateTime.parse("2024-03-12"),
-    "sped_money": 200,
+    "dataTime": DateTime.parse("2024-03-01"),
+    "sped_money": 2000000,
     "product": <Map<String, dynamic>>[
       {
-        "icon": Icon(Icons.restaurant_menu),
-        "title": "Pizza",
-        "date": DateTime.now(),
-        "price": 25000.0,
+        "title": ["Pizza", "Hot dog", "Lavash"],
+        // "price": 25000.0,
       }
     ]
   },

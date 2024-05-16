@@ -17,6 +17,8 @@ class _Page_third extends State<Page_third> {
   final _passwordController = TextEditingController();
   bool _obscureText1 = true;
   bool _obscureText2 = true;
+  final PageController _pageController = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -109,7 +111,7 @@ class _Page_third extends State<Page_third> {
           ),
           Column(
             children: [
-              buttonBig("Log in"),
+              buttonBig("next", context, _pageController),
               20.height(),
               Text(
                 "By continuing, you agree o Looas's",

@@ -68,9 +68,13 @@ Widget text2() {
   );
 }
 
-Widget buttonBig(String text) {
+Widget buttonBig(
+    String text, BuildContext context, PageController _pageController) {
   return InkWell(
-    onTap: () {},
+    onTap: () {
+      _pageController.nextPage(
+          duration: Duration(seconds: 1), curve: Curves.easeInOut);
+    },
     child: Container(
       width: 350,
       alignment: Alignment.center,
