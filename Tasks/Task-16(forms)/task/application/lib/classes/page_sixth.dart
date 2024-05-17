@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  final togglePageAdd;
+
+  const Home({required this.togglePageAdd, super.key});
 
   @override
   Widget build(BuildContext context) {
-  final PageController _pageController = PageController();
+    final PageController _pageController = PageController();
 
     return Scaffold(
       appBar: AppBar(

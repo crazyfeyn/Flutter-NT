@@ -17,6 +17,7 @@ const List<String> options = ['first_class', 'second_class', 'third_class'];
 String selectedOption = options.first;
 bool iconFlag = true;
 int generelIndex = 0;
+bool reversedFlag = false;
 
 class _MainScreenState extends State<MainScreen> {
   void _showDropDown() {
@@ -47,6 +48,12 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  void togglereReversedFlag() {
+    setState(() {
+      reversedFlag = !reversedFlag;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List filterList = [
@@ -74,13 +81,16 @@ class _MainScreenState extends State<MainScreen> {
               },
               icon: const Icon(CupertinoIcons.chevron_down_circle)),
           IconButton(
-              onPressed: () {}, icon: const Icon(CupertinoIcons.divide_square))
+              onPressed: () {
+                togglereReversedFlag();
+              },
+              icon: const Icon(CupertinoIcons.square_stack_fill))
         ],
         leadingWidth: 350,
       ),
       body: Padding(
           padding: const EdgeInsets.all(16),
-          child: choice(filterList, generelIndex)),
+          child: choice(filterList, generelIndex, reversedFlag)),
     );
   }
 }

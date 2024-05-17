@@ -21,6 +21,21 @@ class _ScreenMainState extends State<ScreenMain>
     _tabController = TabController(length: 6, vsync: this);
   }
 
+  void togglePageAdd() {
+    _tabController.index++;
+    setState(() {});
+  }
+
+  void toggleSignIn() {
+    _tabController.index = 1;
+    setState(() {});
+  }
+
+  void togglePageRemove() {
+    _tabController.index--;
+    setState(() {});
+  }
+
   @override
   void dispose() {
     _tabController.dispose();
@@ -30,34 +45,27 @@ class _ScreenMainState extends State<ScreenMain>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(0),
-        child: Center(
-          child: Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                Page_first(),
-                Page_second(),
-                Page_third(),
-                Page_fouth(),
-                Page_fifth(),
-                const Home(),
-              ],
-            ),
+      body: Center(
+        child: Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              Page_first(togglePageAdd: togglePageAdd),
+              Page_second(togglePageAdd: togglePageAdd),
+              Page_third(
+                  togglePageAdd: togglePageAdd,
+                  togglePageRemove: togglePageRemove,
+                  toggleSignIn: toggleSignIn),
+              Page_fouth(
+                  togglePageAdd: togglePageAdd,
+                  togglePageRemove: togglePageRemove),
+              Page_fifth(
+                  togglePageAdd: togglePageAdd,
+                  togglePageRemove: togglePageRemove),
+              Home(togglePageAdd: togglePageAdd),
+            ],
           ),
         ),
-      ),
-      bottomNavigationBar: TabBar(
-        controller: _tabController,
-        tabs: const [
-          Tab(text: 'First'),
-          Tab(text: 'Second'),
-          Tab(text: 'Third'),
-          Tab(text: 'Fourth'),
-          Tab(text: 'Fifth'),
-          Tab(text: 'Home'),
-        ],
       ),
     );
   }

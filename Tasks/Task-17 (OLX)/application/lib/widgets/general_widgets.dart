@@ -2,8 +2,13 @@ import 'package:application/utils/extensions/general_extensions.dart';
 import 'package:application/utils/tools/general_tools.dart';
 import 'package:flutter/material.dart';
 
-Widget choice(filterList, generelIndex) {
+Widget choice(
+  filterList,
+  generelIndex,
+  bool reversedFlag,
+) {
   return ListView(
+    reverse: reversedFlag ? true : false,
     children: [...List.generate(10, (index) => filterList[generelIndex])],
   );
 }

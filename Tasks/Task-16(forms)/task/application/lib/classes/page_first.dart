@@ -4,7 +4,10 @@ import 'package:application/widgets/general_widgets.dart';
 import 'package:flutter/material.dart';
 
 class Page_first extends StatelessWidget {
-  final PageController _pageController = PageController();
+  final togglePageAdd;
+
+  Page_first({required this.togglePageAdd});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,27 +25,7 @@ class Page_first extends StatelessWidget {
                 height: 400,
               ),
               15.height(),
-              InkWell(
-                onTap: () {
-                  _pageController.nextPage(
-                      duration: Duration(seconds: 1), curve: Curves.easeInOut);
-                },
-                child: Container(
-                  width: 350,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 100),
-                  decoration: BoxDecoration(
-                      color: Color(0xFF4155FA),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Text(
-                    "create account",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18),
-                  ),
-                ),
-              ),
+              buttonBig("Create account", togglePageAdd),
               20.height(),
               faangLogin(),
             ],

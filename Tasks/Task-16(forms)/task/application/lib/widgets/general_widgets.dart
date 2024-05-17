@@ -1,3 +1,4 @@
+import 'package:application/utils/database.dart';
 import 'package:application/utils/extensions.dart';
 import 'package:application/utils/tools.dart';
 import 'package:flutter/material.dart';
@@ -68,24 +69,35 @@ Widget text2() {
   );
 }
 
-Widget buttonBig(
-    String text, BuildContext context, PageController _pageController) {
+Widget buttonBig(String text, Function togglePageAdd,
+    [GlobalKey<FormState>? formKey, List? userDataList, bool? quickCheckUser]) {
   return InkWell(
     onTap: () {
-      _pageController.nextPage(
-          duration: Duration(seconds: 1), curve: Curves.easeInOut);
+      if (formKey?.currentState?.validate() ?? true) {
+        if (userDataList != null && userDataList.length >= 2) {
+          DataBase.userDataBase
+              .add({'email': userDataList[1], 'password': userDataList[2]});
+        }
+
+        formKey?.currentState?.save();
+        togglePageAdd();
+      }
     },
     child: Container(
       width: 350,
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 100),
       decoration: BoxDecoration(
-          color: const Color(0xFF4155FA),
-          borderRadius: BorderRadius.circular(10)),
+        color: const Color(0xFF4155FA),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Text(
         text,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18),
+          color: Colors.white,
+          fontWeight: FontWeight.w700,
+          fontSize: 18,
+        ),
       ),
     ),
   );
@@ -175,17 +187,27 @@ Widget dont() {
       ]));
 }
 
-Widget haveAnAcc() {
-  return RichText(
-      text: TextSpan(
-          text: 'You have an account?',
-          style: Tools.solidStyle,
-          children: const [
-        TextSpan(
-            text: ' Sign in here',
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w700, fontSize: 16))
-      ]));
+Widget haveAnAcc([bool? IsAccess, Function? toggleSignIn]) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      Text(
+        "You have an account",
+        style: Tools.solidStyle,
+      ),
+      TextButton(
+          onPressed: () {
+            if (IsAccess != null) {
+              toggleSignIn!();
+            }
+          },
+          child: const Text('Sign in here',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16)))
+    ],
+  );
 }
 
 Widget cruText(String text1, String text2) {
@@ -208,7 +230,8 @@ Widget codes() {
           textAlign: TextAlign.center,
           decoration: InputDecoration(
             hintText: '0',
-            hintStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
+            hintStyle:
+                const TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           ),
         ),
@@ -219,7 +242,8 @@ Widget codes() {
           textAlign: TextAlign.center,
           decoration: InputDecoration(
             hintText: '0',
-            hintStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
+            hintStyle:
+                const TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           ),
         ),
@@ -230,7 +254,8 @@ Widget codes() {
           textAlign: TextAlign.center,
           decoration: InputDecoration(
             hintText: '0',
-            hintStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
+            hintStyle:
+                const TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           ),
         ),
@@ -241,7 +266,8 @@ Widget codes() {
           textAlign: TextAlign.center,
           decoration: InputDecoration(
             hintText: '0',
-            hintStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
+            hintStyle:
+                const TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           ),
         ),

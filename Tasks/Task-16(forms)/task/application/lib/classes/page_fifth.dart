@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Page_fifth extends StatefulWidget {
+  final togglePageAdd;
+  final togglePageRemove;
+
+  Page_fifth({required this.togglePageAdd, required this.togglePageRemove});
   @override
   State<StatefulWidget> createState() {
     return _Page_fifth();
@@ -30,7 +34,9 @@ class _Page_fifth extends State<Page_fifth> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.togglePageRemove();
+                },
                 icon: const Icon(CupertinoIcons.back),
                 color: Colors.black,
                 iconSize: 30,
@@ -46,64 +52,48 @@ class _Page_fifth extends State<Page_fifth> {
           Column(
             children: [
               InkWell(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                            title: Column(
-                          children: [
-                            40.height(),
-                            const CircleAvatar(
-                              child: Icon(
-                                Icons.check,
-                                size: 40,
-                              ),
-                            ),
-                            20.height(),
-                            textGeneralBold("Your  activated",
-                                "Congratilation you are part of our team"),
-                            50.height(),
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                width: 350,
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 100),
-                                decoration: BoxDecoration(
-                                    color: const Color(0xFF4155FA),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: const Text(
-                                  "Ok",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 18),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                              title: Column(
+                            children: [
+                              40.height(),
+                              const CircleAvatar(
+                                child: Icon(
+                                  Icons.check,
+                                  size: 40,
                                 ),
                               ),
-                            )
-                          ],
-                        ));
-                      });
-                },
-                child: Container(
-                  width: 350,
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 100),
-                  decoration: BoxDecoration(
-                      color: const Color(0xFF4155FA),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Text(
-                    "Continuie",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18),
-                  ),
-                ),
-              ),
+                              20.height(),
+                              textGeneralBold("Your  activated",
+                                  "Congratilation you are part of our team"),
+                              50.height(),
+                              InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  width: 350,
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 100),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xFF4155FA),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: const Text(
+                                    "Ok",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 18),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ));
+                        });
+                  },
+                  child: buttonBig("continuie", widget.togglePageAdd)),
               20.height(),
               Text(
                 "By continuing, you agree o Looas's",

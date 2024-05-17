@@ -6,6 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Page_fouth extends StatefulWidget {
+  final togglePageAdd;
+  final togglePageRemove;
+
+  Page_fouth({required this.togglePageAdd, required this.togglePageRemove});
   @override
   State<StatefulWidget> createState() {
     return _Page_fouth();
@@ -29,7 +33,9 @@ class _Page_fouth extends State<Page_fouth> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.togglePageRemove();
+                },
                 icon: Icon(CupertinoIcons.back),
                 color: Colors.black,
                 iconSize: 30,
@@ -50,7 +56,7 @@ class _Page_fouth extends State<Page_fouth> {
           ),
           Column(
             children: [
-              buttonBig("Log in", context, _pageController),
+              buttonBig("Log in", widget.togglePageAdd),
               20.height(),
               Text(
                 "By continuing, you agree o Looas's",
