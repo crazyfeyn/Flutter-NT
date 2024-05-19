@@ -112,6 +112,7 @@ class _Page_third extends State<Page_third> {
                       ),
                       15.height(),
                       TextFormField(
+                        key: formKey,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                               onPressed: () {
@@ -150,6 +151,7 @@ class _Page_third extends State<Page_third> {
                       ),
                       15.height(),
                       TextFormField(
+                        key: formKey,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                               onPressed: () {
