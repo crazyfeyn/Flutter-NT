@@ -3,7 +3,6 @@ import 'package:application/screens/home_screen.dart';
 import 'package:application/utils/tools/general_tools.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class Onboarding1 extends StatefulWidget {
   @override
@@ -44,7 +43,7 @@ class _Onboarding1 extends State<Onboarding1> {
         listIndex++;
       } else {
         Navigator.push(
-            context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
+            context, MaterialPageRoute(builder: (ctx) => const HomeScreen()));
       }
     });
   }
@@ -78,7 +77,7 @@ class _Onboarding1 extends State<Onboarding1> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => HomeScreen()));
+                                          builder: (context) => const HomeScreen()));
                                 },
                                 child: Text(
                                   "Skip",
@@ -128,21 +127,21 @@ class _Onboarding1 extends State<Onboarding1> {
                         Icon(
                           CupertinoIcons.circle_fill,
                           color: listIndex == 0
-                              ? Color(0xFF9372F1)
+                              ? const Color(0xFF9372F1)
                               : Colors.grey.shade400,
                           size: 17,
                         ),
                         Icon(
                           CupertinoIcons.circle_fill,
                           color: listIndex == 1
-                              ? Color(0xFF9372F1)
+                              ? const Color(0xFF9372F1)
                               : Colors.grey.shade400,
                           size: 17,
                         ),
                         Icon(
                           CupertinoIcons.circle_fill,
                           color: listIndex == 2
-                              ? Color(0xFF9372F1)
+                              ? const Color(0xFF9372F1)
                               : Colors.grey.shade400,
                           size: 17,
                         )

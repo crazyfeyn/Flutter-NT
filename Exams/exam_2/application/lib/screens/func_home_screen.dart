@@ -1,5 +1,5 @@
-import 'package:application/classes/recipe_favorite_list.dart';
 import 'package:application/classes/smoothies.dart';
+import 'package:application/classes/users.dart';
 import 'package:application/functions/assistants.dart';
 import 'package:application/screens/recipe_screen.dart';
 import 'package:application/utils/extensions/general_extensions.dart';
@@ -7,7 +7,8 @@ import 'package:application/utils/tools/general_tools.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Widget homeScreen(toggleFavourite, currentIndex, toggleBottomIndex) {
+Widget homeScreen(
+    toggleFavourite, currentIndex, toggleBottomIndex, BuildContext context) {
   return Scaffold(
     backgroundColor: const Color(0xFF212832),
     appBar: topBar(),
@@ -24,9 +25,12 @@ Widget homeScreen(toggleFavourite, currentIndex, toggleBottomIndex) {
                     for (int i = 0; i < Smoothies.smoothiesDataList.length; i++)
                       InkWell(
                           onTap: () {
-                            //!
-                            // RecipeScreen(
-                            //     Smoothies.smoothiesDataList[i].index);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (ctx) => RecipeScreen(
+                                          index: i,
+                                        )));
                           },
                           child: Column(
                             children: [
@@ -34,7 +38,7 @@ Widget homeScreen(toggleFavourite, currentIndex, toggleBottomIndex) {
                               Container(
                                   height: 200,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
+                                      borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(25),
                                           topRight: Radius.circular(25)),
                                       image: DecorationImage(
@@ -54,16 +58,20 @@ Widget homeScreen(toggleFavourite, currentIndex, toggleBottomIndex) {
                                               MainAxisAlignment.end,
                                           children: [
                                             InkWell(
-                                              onTap: () => toggleFavourite(
-                                                  Smoothies.smoothiesDataList[i]
-                                                      .index),
+                                              onTap: () {
+                                                toggleFavourite(Smoothies
+                                                    .smoothiesDataList[i]
+                                                    .index);
+                                              },
                                               child: CircleAvatar(
                                                 child: Smoothies
                                                         .smoothiesDataList[i]
                                                         .isFavourite
-                                                    ? Icon(
-                                                        Icons.favorite_rounded)
-                                                    : Icon(
+                                                    ? const Icon(
+                                                        Icons.favorite_rounded,
+                                                        color: Colors.red,
+                                                      )
+                                                    : const Icon(
                                                         Icons.favorite_border),
                                               ),
                                             )
@@ -72,11 +80,12 @@ Widget homeScreen(toggleFavourite, currentIndex, toggleBottomIndex) {
                                         Row(
                                           children: [
                                             Container(
-                                              padding: EdgeInsets.all(10),
+                                              padding: const EdgeInsets.all(10),
                                               decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(17),
-                                                  color: Color(0xFF9372F1)),
+                                                  color:
+                                                      const Color(0xFF9372F1)),
                                               child: Text(
                                                 'Easy',
                                                 style: Tools.solidStyle
@@ -91,7 +100,7 @@ Widget homeScreen(toggleFavourite, currentIndex, toggleBottomIndex) {
                               Container(
                                 height: 200,
                                 padding: const EdgeInsets.all(20),
-                                margin: EdgeInsets.only(bottom: 25),
+                                margin: const EdgeInsets.only(bottom: 25),
                                 decoration: const BoxDecoration(
                                   color: Color(0xFF393948),
                                   borderRadius: BorderRadius.only(
@@ -144,35 +153,112 @@ Widget homeScreen(toggleFavourite, currentIndex, toggleBottomIndex) {
       ),
       clipBehavior: Clip.hardEdge,
       child: FloatingActionButton(
-        backgroundColor: Color(0xFF9372F1),
-        onPressed: () {},
+        backgroundColor: const Color(0xFF9372F1),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (ctx) {
+                return Container(
+                  decoration: const BoxDecoration(color: Color(0xFF212832)),
+                  padding: const EdgeInsets.all(15),
+                  height: 300,
+                  child: SingleChildScrollView(
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Reviews",
+                              style: Tools.boldStyle,
+                            ),
+                            7.height(),
+                            SizedBox(
+                              height: 340,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  for (int i = 0; i < 4; i++)
+                                    SizedBox(
+                                      width: 350.sp,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          SizedBox(
+                                            child: Image.asset(
+                                              Users.userList[i].profileImage,
+                                              width: 70,
+                                            ),
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(Users.userList[i].name,
+                                                  style: Tools.solidStyle
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w600)),
+                                              Text(
+                                                "${Users.userList[i].followers} Followers",
+                                                style: Tools.solidStyle
+                                                    .copyWith(fontSize: 13.sp),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              for (int i = 0; i < 5; i++)
+                                                const Icon(
+                                                  Icons.star_rounded,
+                                                  color: Color(0xFFFFC529),
+                                                )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+        },
         // tooltip: 'Increment',
 
-        child: Icon(
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),
       ),
     ),
     bottomNavigationBar: BottomNavigationBar(
-      selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-      unselectedLabelStyle: TextStyle(
+      selectedLabelStyle:
+          const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+      unselectedLabelStyle: const TextStyle(
           fontWeight: FontWeight.w600, fontSize: 14, color: Color(0xFFC4C4C4)),
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Explore'),
+        BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
         BottomNavigationBarItem(
             icon: Icon(
-              Icons.explore,
+              Icons.favorite,
             ),
             label: 'Favourites'),
         BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Articles'),
       ],
-      backgroundColor: Color(0xFF393948),
+      backgroundColor: const Color(0xFF393948),
       currentIndex: currentIndex,
-      unselectedItemColor: Color(0xFFC4C4C4),
-      selectedItemColor: Color(0xFF9372F1),
+      unselectedItemColor: const Color(0xFFC4C4C4),
+      selectedItemColor: const Color(0xFF9372F1),
       iconSize: 30,
       type: BottomNavigationBarType.fixed,
       onTap: (value) {

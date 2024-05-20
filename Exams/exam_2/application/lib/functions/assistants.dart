@@ -17,8 +17,8 @@ Widget bigButton(String text, Function nextScreen,
       width: double.infinity,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: Color(0xFF9372F1), borderRadius: BorderRadius.circular(10.sp)),
-      padding: EdgeInsets.all(17),
+          color: const Color(0xFF9372F1), borderRadius: BorderRadius.circular(10.sp)),
+      padding: const EdgeInsets.all(17),
       child: Text(
         text,
         style: TextStyle(
@@ -37,8 +37,8 @@ Widget nextButton(buttonText, Function increaseListIndex) {
       width: 373.sp,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: Color(0xFF9372F1), borderRadius: BorderRadius.circular(10.sp)),
-      padding: EdgeInsets.all(17),
+          color: const Color(0xFF9372F1), borderRadius: BorderRadius.circular(10.sp)),
+      padding: const EdgeInsets.all(17),
       child: Text(
         buttonText,
         style: TextStyle(
@@ -126,4 +126,44 @@ Widget topExpanded() {
           )
         ],
       ));
+}
+
+Widget searchButtons() {
+  List<String> lst = [
+    "Healthy",
+    "Brunch",
+    "Orange",
+    "Fresh",
+    "Tasty",
+    "strawberry"
+  ];
+  return SizedBox(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Wrap(
+          spacing: 12.sp,
+          runSpacing: 20.sp,
+          children: [
+            for (int i = 0; i < lst.length; i++)
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  width: 120,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xFF2C2F45)),
+                  child: Text(
+                    lst[i],
+                    style: Tools.solidStyle.copyWith(color: const Color(0xFF9372F1)),
+                  ),
+                ),
+              )
+          ],
+        ),
+      ],
+    ),
+  );
 }

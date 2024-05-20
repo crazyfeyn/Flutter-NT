@@ -1,12 +1,10 @@
 import 'package:application/classes/recipe_favorite_list.dart';
 import 'package:application/classes/smoothies.dart';
-import 'package:application/functions/assistants.dart';
-import 'package:application/screens/real_home_screen.dart';
-import 'package:application/screens/recipe_screen.dart';
-import 'package:application/utils/extensions/general_extensions.dart';
-import 'package:application/utils/tools/general_tools.dart';
+import 'package:application/screens/explore.dart';
+import 'package:application/screens/favorite.dart';
+import 'package:application/screens/func_home_screen.dart';
+import 'package:application/screens/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,9 +23,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void toggleFavourite(int index) {
     setState(() {
-      Smoothies.smoothiesDataList.forEach((element) {
+      for (var element in Smoothies.smoothiesDataList) {
         if (element.index == index) {
           element.isFavourite = !element.isFavourite;
+
           if (element.isFavourite) {
             RecipeList.favouritesDataList.add(RecipeList(
                 mainImage: element.mainImage,
@@ -41,21 +40,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 .removeWhere((item) => item.index == index);
           }
         }
-      });
+      }
     });
   }
 
   void toggleBottomIndex(int index) {
-    _currentIndex = index;
-    setState(() {});
+    setState(() {
+      _currentIndex = index;
+    });
   }
-
-  late List screenList = [
-    homeScreen(toggleFavourite, _currentIndex, toggleBottomIndex),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    List screenList = [
+      homeScreen(toggleFavourite, _currentIndex, toggleBottomIndex, context),
+      const SearchScreen(),
+      ExploreScreen(
+          currentIndex: _currentIndex,
+          toggleBottomIndex: toggleBottomIndex,
+          toggleFavourite: toggleFavourite),
+      FavoriteScreen(
+          currentIndex: _currentIndex,
+          toggleBottomIndex: toggleBottomIndex,
+          toggleFavourite: toggleFavourite)
+    ];
     return screenList[_currentIndex];
   }
 }
