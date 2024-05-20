@@ -46,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void toggleBottomIndex(int index) {
     setState(() {
-      _currentIndex = index;
+      if (index != 4) {
+        _currentIndex = index;
+      }
     });
   }
 

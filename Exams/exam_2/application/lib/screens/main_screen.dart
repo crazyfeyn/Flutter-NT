@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   // }
 
   void _loadInitial() async {
-    await Future.delayed(const Duration(seconds: 0));
+    await Future.delayed(const Duration(seconds: 2));
     setState(() {
       _showInitial = false;
       _tabController = TabController(length: 2, vsync: this);

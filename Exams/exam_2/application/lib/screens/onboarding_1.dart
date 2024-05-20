@@ -42,7 +42,7 @@ class _Onboarding1 extends State<Onboarding1> {
       if (listIndex < 2) {
         listIndex++;
       } else {
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (ctx) => const HomeScreen()));
       }
     });
@@ -74,10 +74,11 @@ class _Onboarding1 extends State<Onboarding1> {
                           children: [
                             TextButton(
                                 onPressed: () {
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => const HomeScreen()));
+                                          builder: (context) =>
+                                              const HomeScreen()));
                                 },
                                 child: Text(
                                   "Skip",
