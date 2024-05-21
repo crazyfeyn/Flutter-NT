@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:application/utils/extensions/general_extensions.dart';
 import 'package:application/utils/tools/general_tools.dart';
 import 'package:application/widgets/general_widgets.dart';
@@ -18,6 +16,7 @@ String selectedOption = options.first;
 bool iconFlag = true;
 int generelIndex = 0;
 bool reversedFlag = false;
+final TextEditingController _controller = TextEditingController();
 
 class _MainScreenState extends State<MainScreen> {
   void _showDropDown() {
@@ -57,21 +56,33 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     List filterList = [
-      infoProduct(iconFlag, toggleTopLike),
-      infoProduct_second(iconFlag, toggleTopLike),
-      infoProductThird(iconFlag, toggleTopLike)
+      infoProduct(iconFlag, toggleTopLike, generelIndex),
+      infoProduct_second(iconFlag, toggleTopLike, generelIndex),
+      infoProductThird(iconFlag, toggleTopLike, generelIndex)
     ];
 
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 70,
         leading: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "     We have 1000 updates",
-              style: Tools.boldStyle.copyWith(fontSize: 17),
-            ),
+            Container(
+              width: 325,
+              height: 70,
+              child: TextField(
+                controller: _controller,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    label: Text("Search"),
+                    labelStyle: TextStyle(color: Colors.grey),
+                    suffixIcon: InkWell(
+                      onTap: () {},
+                      child: Icon(Icons.search),
+                    )),
+              ),
+            )
           ],
         ),
         actions: [

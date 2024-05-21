@@ -1,3 +1,4 @@
+import 'package:application/classes/models.dart';
 import 'package:application/utils/extensions/general_extensions.dart';
 import 'package:application/utils/tools/general_tools.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,13 @@ Widget choice(
 ) {
   return ListView(
     reverse: reversedFlag ? true : false,
-    children: [...List.generate(10, (index) => filterList[generelIndex])],
+    children: [
+      for (int i = 0; i < Models.dataBase.length; i++) filterList[generelIndex]
+    ],
   );
 }
 
-Widget infoProduct(bool iconFlag, toggleTopLike) {
+Widget infoProduct(bool iconFlag, toggleTopLike, int index) {
   return Column(
     children: [
       //image sec
@@ -32,9 +35,9 @@ Widget infoProduct(bool iconFlag, toggleTopLike) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Color(0xFF1ce1d7),
+                    color: const Color(0xFF1ce1d7),
                     borderRadius: BorderRadius.circular(3)),
                 child: Text(
                   "TOP",
@@ -57,7 +60,7 @@ Widget infoProduct(bool iconFlag, toggleTopLike) {
                   child: Wrap(
                     children: [
                       Text(
-                        "universal electro car for every one who wants joy",
+                        Models.dataBase[index].desc,
                         style: Tools.solidStyle,
                       )
                     ],
@@ -76,7 +79,7 @@ Widget infoProduct(bool iconFlag, toggleTopLike) {
             InkWell(
               onTap: () {},
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(7)),
@@ -88,7 +91,7 @@ Widget infoProduct(bool iconFlag, toggleTopLike) {
             ),
             5.height(),
             Text(
-              "50 000 sum",
+              Models.dataBase[index].price,
               style: Tools.boldStyle.copyWith(fontWeight: FontWeight.w700),
             ),
             Text(
@@ -102,7 +105,7 @@ Widget infoProduct(bool iconFlag, toggleTopLike) {
   );
 }
 
-Widget infoProduct_second(bool iconFlag, toggleTopLike) {
+Widget infoProduct_second(bool iconFlag, toggleTopLike, int index) {
   return Row(
     children: [
       //image sec
@@ -146,7 +149,7 @@ Widget infoProduct_second(bool iconFlag, toggleTopLike) {
                   child: Wrap(
                     children: [
                       Text(
-                        "universal electro car for every one who wants joy",
+                        Models.dataBase[index].desc,
                         style: Tools.solidStyle.copyWith(fontSize: 16),
                       )
                     ],
@@ -177,7 +180,7 @@ Widget infoProduct_second(bool iconFlag, toggleTopLike) {
             ),
             5.height(),
             Text(
-              "50 000 sum",
+              Models.dataBase[index].price,
               style: Tools.boldStyle.copyWith(fontWeight: FontWeight.w700),
             ),
             Text(
@@ -191,7 +194,7 @@ Widget infoProduct_second(bool iconFlag, toggleTopLike) {
   );
 }
 
-Widget infoProductThird(bool iconFlag, Function toggleTopLike) {
+Widget infoProductThird(bool iconFlag, Function toggleTopLike, int index) {
   return SingleChildScrollView(
     child: GridView.count(
       shrinkWrap: true,
@@ -202,13 +205,13 @@ Widget infoProductThird(bool iconFlag, Function toggleTopLike) {
       childAspectRatio: 0.5,
       children: List.generate(
         10,
-        (index) => oneProductInColumn(iconFlag, toggleTopLike),
+        (index) => oneProductInColumn(iconFlag, toggleTopLike, index),
       ),
     ),
   );
 }
 
-Widget oneProductInColumn(iconFlag, toggleTopLike) {
+Widget oneProductInColumn(iconFlag, toggleTopLike, int index) {
   return Column(
     children: [
       //image sec
