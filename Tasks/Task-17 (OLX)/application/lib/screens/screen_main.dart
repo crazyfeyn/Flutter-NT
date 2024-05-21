@@ -1,5 +1,3 @@
-import 'package:application/utils/extensions/general_extensions.dart';
-import 'package:application/utils/tools/general_tools.dart';
 import 'package:application/widgets/general_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
