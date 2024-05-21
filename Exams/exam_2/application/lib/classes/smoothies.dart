@@ -39,5 +39,25 @@ class Smoothies {
         desc:
             "In a few steps, you'll be able to make a delicious Melon Smoothie. It's easy and simple, enjoy!",
         type: ['Hard', 'Dairy']),
+    Smoothies(
+        isFavourite: false,
+        index: 2,
+        mainImage: "assets/images/reco1.png",
+        smallPro: "assets/images/smallPro1.png",
+        accountName: "Melvin Robson",
+        highName: "Melon Smoothie",
+        desc:
+            "In a few steps, you'll be able to make a delicious Melon Smoothie. It's easy and simple, enjoy!",
+        type: ['Easy']),
+    Smoothies(
+        isFavourite: false,
+        index: 3,
+        mainImage: "assets/images/reco1.png",
+        smallPro: "assets/images/smallPro1.png",
+        accountName: "Melvin Robson",
+        highName: "Melon Smoothie",
+        desc:
+            "In a few steps, you'll be able to make a delicious Melon Smoothie. It's easy and simple, enjoy!",
+        type: ['Easy']),
   ];
 }

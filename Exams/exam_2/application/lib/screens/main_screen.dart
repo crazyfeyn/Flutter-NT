@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:application/classes/initial_class.dart';
 import 'package:application/functions/assistants.dart';
 import 'package:application/screens/onboarding_1.dart';
@@ -24,6 +26,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   String password = '';
   Icon curIcon = const Icon(Icons.visibility);
   Icon unvisibleIcon = const Icon(Icons.visibility_off);
+  bool isObscured = false;
 
   @override
   void initState() {
@@ -50,9 +53,12 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
 
   void _toggleVisible() {
     setState(() {
-      curIcon = curIcon == unvisibleIcon
-          ? const Icon(Icons.visibility)
-          : unvisibleIcon;
+      isObscured = !isObscured;
+      if (curIcon == unvisibleIcon) {
+        curIcon = const Icon(Icons.visibility);
+      } else {
+        curIcon = unvisibleIcon;
+      }
     });
   }
 
@@ -157,6 +163,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         ),
                         10.height(),
                         TextFormField(
+                          obscureText: isObscured,
                           keyboardType: TextInputType.visiblePassword,
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
