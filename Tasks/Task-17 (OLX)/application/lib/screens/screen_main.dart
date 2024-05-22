@@ -1,6 +1,7 @@
 import 'package:application/widgets/general_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ String selectedOption = options.first;
 bool iconFlag = true;
 int generelIndex = 0;
 bool reversedFlag = false;
+String target = "";
 final TextEditingController _controller = TextEditingController();
 
 class _MainScreenState extends State<MainScreen> {
@@ -54,9 +56,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     List filterList = [
-      infoProduct(iconFlag, toggleTopLike, generelIndex),
-      infoProduct_second(iconFlag, toggleTopLike, generelIndex),
-      infoProductThird(iconFlag, toggleTopLike, generelIndex)
+      infoProduct(iconFlag, toggleTopLike, generelIndex, target),
+      infoProduct_second(iconFlag, toggleTopLike, generelIndex, target),
+      infoProductThird(iconFlag, toggleTopLike, generelIndex, target)
     ];
 
     return Scaffold(
@@ -64,20 +66,25 @@ class _MainScreenState extends State<MainScreen> {
         toolbarHeight: 70,
         leading: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: 325,
+              width: 305,
               height: 70,
               child: TextField(
                 controller: _controller,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    label: Text("Search"),
-                    labelStyle: TextStyle(color: Colors.grey),
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12))),
+                    label: const Text("Search"),
+                    labelStyle: const TextStyle(color: Colors.grey),
                     suffixIcon: InkWell(
-                      onTap: () {},
-                      child: Icon(Icons.search),
+                      onTap: () {
+                        setState(() {
+                          target = _controller.text;
+                        });
+                      },
+                      child: const Icon(Icons.search),
                     )),
               ),
             )
@@ -99,7 +106,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: Padding(
           padding: const EdgeInsets.all(16),
-          child: choice(filterList, generelIndex, reversedFlag)),
+          child: choice(filterList, generelIndex, reversedFlag, target)),
     );
   }
 }

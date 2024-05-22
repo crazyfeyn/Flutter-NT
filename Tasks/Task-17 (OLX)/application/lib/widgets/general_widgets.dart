@@ -3,11 +3,7 @@ import 'package:application/utils/extensions/general_extensions.dart';
 import 'package:application/utils/tools/general_tools.dart';
 import 'package:flutter/material.dart';
 
-Widget choice(
-  filterList,
-  generelIndex,
-  bool reversedFlag,
-) {
+Widget choice(filterList, generelIndex, bool reversedFlag, String? target) {
   return ListView(
     reverse: reversedFlag ? true : false,
     children: [
@@ -16,199 +12,208 @@ Widget choice(
   );
 }
 
-Widget infoProduct(bool iconFlag, toggleTopLike, int index) {
-  return Column(
-    children: [
-      //image sec
-      Container(
-          height: 340,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-            image: NetworkImage(
-              "https://frankfurt.apollo.olxcdn.com/v1/files/doshzbdqo7622-UZ/image;s=1000x700",
-            ),
-            fit: BoxFit.cover,
-          )),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: const Color(0xFF1ce1d7),
-                    borderRadius: BorderRadius.circular(3)),
-                child: Text(
-                  "TOP",
-                  style: Tools.boldStyle,
-                ),
-              ),
-            ],
-          )),
-      //product desc sec
-      Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+Widget infoProduct(bool iconFlag, toggleTopLike, int index, String target) {
+  return Models.dataBase[index].desc.contains(target)
+      ? Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 300,
-                  child: Wrap(
+            Container(
+                height: 340,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  image: NetworkImage(
+                    "https://frankfurt.apollo.olxcdn.com/v1/files/doshzbdqo7622-UZ/image;s=1000x700",
+                  ),
+                  fit: BoxFit.cover,
+                )),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: const Color(0xFF1ce1d7),
+                          borderRadius: BorderRadius.circular(3)),
+                      child: Text(
+                        "TOP",
+                        style: Tools.boldStyle,
+                      ),
+                    ),
+                  ],
+                )),
+            //product desc sec
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        Models.dataBase[index].desc,
+                      SizedBox(
+                        width: 300,
+                        child: Wrap(
+                          children: [
+                            Text(
+                              Models.dataBase[index].desc,
+                              style: Tools.solidStyle,
+                            )
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            toggleTopLike();
+                          },
+                          icon: Icon(iconFlag
+                              ? Icons.favorite_outline
+                              : Icons.favorite_rounded))
+                    ],
+                  ),
+                  10.height(),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(7)),
+                      child: Text(
+                        "New",
                         style: Tools.solidStyle,
-                      )
-                    ],
+                      ),
+                    ),
                   ),
-                ),
-                IconButton(
-                    onPressed: () {
-                      toggleTopLike();
-                    },
-                    icon: Icon(iconFlag
-                        ? Icons.favorite_outline
-                        : Icons.favorite_rounded))
-              ],
-            ),
-            10.height(),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(7)),
-                child: Text(
-                  "New",
-                  style: Tools.solidStyle,
-                ),
+                  5.height(),
+                  Text(
+                    Models.dataBase[index].price,
+                    style:
+                        Tools.boldStyle.copyWith(fontWeight: FontWeight.w700),
+                  ),
+                  Text(
+                    "Tashkent, Uzbeksitan",
+                    style: Tools.solidStyle.copyWith(fontSize: 14),
+                  ),
+                ],
               ),
-            ),
-            5.height(),
-            Text(
-              Models.dataBase[index].price,
-              style: Tools.boldStyle.copyWith(fontWeight: FontWeight.w700),
-            ),
-            Text(
-              "Tashkent, Uzbeksitan",
-              style: Tools.solidStyle.copyWith(fontSize: 14),
-            ),
+            )
           ],
-        ),
-      )
-    ],
-  );
+        )
+      : SizedBox();
 }
 
-Widget infoProduct_second(bool iconFlag, toggleTopLike, int index) {
-  return Row(
-    children: [
-      //image sec
-      Container(
-          height: 200,
-          width: 200,
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-            image: NetworkImage(
-              "https://frankfurt.apollo.olxcdn.com/v1/files/doshzbdqo7622-UZ/image;s=1000x700",
-            ),
-            fit: BoxFit.cover,
-          )),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Color(0xFF1ce1d7),
-                    borderRadius: BorderRadius.circular(3)),
-                child: Text(
-                  "TOP",
-                  style: Tools.boldStyle,
-                ),
-              ),
-            ],
-          )),
-      //product desc sec
-      Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+Widget infoProduct_second(
+    bool iconFlag, toggleTopLike, int index, String target) {
+  return Models.dataBase[index].desc.contains(target)
+      ? Row(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 130,
-                  child: Wrap(
+            //image sec
+            Container(
+                height: 200,
+                width: 200,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  image: NetworkImage(
+                    "https://frankfurt.apollo.olxcdn.com/v1/files/doshzbdqo7622-UZ/image;s=1000x700",
+                  ),
+                  fit: BoxFit.cover,
+                )),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Color(0xFF1ce1d7),
+                          borderRadius: BorderRadius.circular(3)),
+                      child: Text(
+                        "TOP",
+                        style: Tools.boldStyle,
+                      ),
+                    ),
+                  ],
+                )),
+            //product desc sec
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        Models.dataBase[index].desc,
-                        style: Tools.solidStyle.copyWith(fontSize: 16),
-                      )
+                      SizedBox(
+                        width: 130,
+                        child: Wrap(
+                          children: [
+                            Text(
+                              Models.dataBase[index].desc,
+                              style: Tools.solidStyle.copyWith(fontSize: 16),
+                            )
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            toggleTopLike();
+                          },
+                          icon: Icon(iconFlag
+                              ? Icons.favorite_outline
+                              : Icons.favorite_rounded))
                     ],
                   ),
-                ),
-                IconButton(
-                    onPressed: () {
-                      toggleTopLike();
-                    },
-                    icon: Icon(iconFlag
-                        ? Icons.favorite_outline
-                        : Icons.favorite_rounded))
-              ],
-            ),
-            10.height(),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(7)),
-                child: Text(
-                  "New",
-                  style: Tools.solidStyle,
-                ),
+                  10.height(),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(7)),
+                      child: Text(
+                        "New",
+                        style: Tools.solidStyle,
+                      ),
+                    ),
+                  ),
+                  5.height(),
+                  Text(
+                    Models.dataBase[index].price,
+                    style:
+                        Tools.boldStyle.copyWith(fontWeight: FontWeight.w700),
+                  ),
+                  Text(
+                    "Tashkent, Uzbeksitan",
+                    style: Tools.solidStyle.copyWith(fontSize: 14),
+                  ),
+                ],
               ),
-            ),
-            5.height(),
-            Text(
-              Models.dataBase[index].price,
-              style: Tools.boldStyle.copyWith(fontWeight: FontWeight.w700),
-            ),
-            Text(
-              "Tashkent, Uzbeksitan",
-              style: Tools.solidStyle.copyWith(fontSize: 14),
-            ),
+            )
           ],
-        ),
-      )
-    ],
-  );
+        )
+      : SizedBox();
 }
 
-Widget infoProductThird(bool iconFlag, Function toggleTopLike, int index) {
-  return SingleChildScrollView(
-    child: GridView.count(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      crossAxisCount: 2,
-      mainAxisSpacing: 10,
-      crossAxisSpacing: 10,
-      childAspectRatio: 0.5,
-      children: List.generate(
-        10,
-        (index) => oneProductInColumn(iconFlag, toggleTopLike, index),
-      ),
-    ),
-  );
+Widget infoProductThird(
+    bool iconFlag, Function toggleTopLike, int index, String target) {
+  return Models.dataBase[index].desc.contains(target)
+      ? SingleChildScrollView(
+          child: GridView.count(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            childAspectRatio: 0.5,
+            children: List.generate(
+              10,
+              (index) => oneProductInColumn(iconFlag, toggleTopLike, index),
+            ),
+          ),
+        )
+      : SizedBox();
 }
 
 Widget oneProductInColumn(iconFlag, toggleTopLike, int index) {
