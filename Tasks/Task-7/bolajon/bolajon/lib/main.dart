@@ -12,9 +12,6 @@ class MainPage extends StatelessWidget {
       home: Scaffold(
         body: Screen1(),
       ),
-      // routes: {
-      //   // '/first': (context) => Screen1(),
-      // },
     );
   }
 }
